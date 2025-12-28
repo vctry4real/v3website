@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg-dark: #050505;
+  --color-bg: #0a0a0a;
+  --color-bg-light: #121212;
+  --color-text: #ffffff;
+  --color-text-muted: #a0a0a0;
+  --color-highlight: #00ff9d;
+  --color-border: #333333;
+  --color-border-muted: #222222;
+  --color-primary: #00ff9d;
+  --color-secondary: #00cc7d;
+  --color-danger: #ff4d4d;
+  --color-warning: #ffcc00;
+  --color-success: #00ff9d;
+  --color-info: #00ccff;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Keep variables for non-Tailwind usage if necessary, or just rely on theme() */
+  --bg-dark: #050505;
+  --bg: #0a0a0a;
+  --bg-light: #121212;
+  --text: #ffffff;
+  --text-muted: #a0a0a0;
+  --highlight: #00ff9d;
+  --border: #333333;
+  --border-muted: #222222;
+  --primary: #00ff9d;
+  --secondary: #00cc7d;
+  --danger: #ff4d4d;
+  --warning: #ffcc00;
+  --success: #00ff9d;
+  --info: #00ccff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Ensure smooth scrolling for the main page */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-dark);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text);
+  position: relative;
+}
+
+/* Global Noise Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/noisy-bg-1.jpg");
+  /* Ensure this path is correct */
+  background-repeat: repeat;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+/* TipTap Editor Styles */
+.ProseMirror {
+  outline: none;
+  min-height: 300px;
+  padding: 1rem;
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+.ProseMirror p {
+  margin: 0.5rem 0;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ProseMirror h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.ProseMirror li {
+  margin: 0.25rem 0;
+}
+
+.ProseMirror blockquote {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #d1d5db;
+  margin: 1rem 0;
+}
+
+.ProseMirror code {
+  background-color: #374151;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.875rem;
+  color: #60a5fa;
+}
+
+.ProseMirror pre {
+  background-color: #374151;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  color: #e5e7eb;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.ProseMirror a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.ProseMirror a:hover {
+  color: #93c5fd;
+}
+
+.ProseMirror hr {
+  border: none;
+  border-top: 1px solid #4b5563;
+  margin: 1rem 0;
+}
+
+.ProseMirror .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #9ca3af;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Placeholder styles */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #9ca3af;
+  pointer-events: none;
+  height: 0;
 }
