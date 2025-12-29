@@ -56,7 +56,7 @@ export const About: React.FC = () => {
                             About Me
                         </h3>
                         <h2 className="text-4xl md:text-5xl font-bold text-text mb-6">
-                            Allwell Onen | <span className="text-text-muted font-serif italic">The Web Architect</span>
+                            Victory Johnson | <span className="text-text-muted font-serif italic">The Digital Craftsman</span>
                         </h2>
                         <p className="text-lg text-text-muted leading-relaxed mb-6">
                             I don't just build websites; I architect digital experiences. With a meticulous eye for detail and a passion for clean, efficient code, I transform complex requirements into elegant, user-centric solutions.
@@ -67,16 +67,16 @@ export const About: React.FC = () => {
 
                         {/* Social Handles */}
                         <div className="flex gap-4">
-                            <a href="#" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
+                            <a href="https://github.com/vctry4real" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
                                 <Github className="w-5 h-5" />
                             </a>
-                            <a href="#" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
+                            <a href="www.linkedin.com/in/vctry4real" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
                                 <Linkedin className="w-5 h-5" />
                             </a>
-                            <a href="#" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
+                            <a href="https://x.com/__vctry?t=U-jP5riW_RBO1VSpgmbI7A&s=09" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
                                 <Twitter className="w-5 h-5" />
                             </a>
-                            <a href="#" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
+                            <a href="mailto:vctry4real@gmail.com" className="p-3 rounded-full border border-border bg-bg-light/50 text-text hover:text-primary hover:border-primary transition-all duration-300">
                                 <Mail className="w-5 h-5" />
                             </a>
                         </div>
@@ -84,7 +84,7 @@ export const About: React.FC = () => {
 
                     {/* Image Side */}
                     <div className="w-full lg:w-1/2 about-image relative">
-                        <div className="relative aspect-[4/5] w-full max-w-md mx-auto rounded-sm overflow-hidden bg-bg-light">
+                        <div className="relative aspect-4/5 w-full max-w-md mx-auto rounded-sm overflow-hidden bg-bg-light">
                             {/* Image Placeholder - Replace with actual image */}
                             <div className="absolute inset-0 bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-700"
                                 style={{ backgroundImage: 'url(/assets/Portfolio_image.png)' }}

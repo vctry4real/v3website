@@ -9,7 +9,7 @@ import {
     profileImageService,
     type AboutData,
 } from "../../components/lib/adminService";
-import MarqueeTestimonials from "../../components/sections/MarqueeTestimonials";
+
 import { Button } from "../../components/ui/Button";
 
 export default function AboutPage() {
@@ -103,7 +103,7 @@ export default function AboutPage() {
                 <div className="w-full lg:w-1/2 animate-hero opacity-0">
                     <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
                         <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
-                        <span className="text-primary text-sm font-bold tracking-wide uppercase">The Web Architect</span>
+                        <span className="text-primary text-sm font-bold tracking-wide uppercase">The Digital Craftsman</span>
                     </div>
                     <h1 className="text-5xl lg:text-7xl font-black text-text mb-6 leading-[1.1]">
                         Architecting <br />
@@ -133,10 +133,12 @@ export default function AboutPage() {
                                 Work With Me <ArrowRight className="w-5 h-5 ml-2" />
                             </Button>
                         </Link>
-                        <Button variant="outline" size="lg" className="px-8 py-6 text-lg border-border/50 hover:border-primary/50 hover:bg-bg-light">
-                            <Download className="w-5 h-5 mr-2" />
-                            Resume
-                        </Button>
+                        <a href="/Software Engineer - Victory Johnson.pdf" download="Victory_Johnson_Resume.pdf" className="inline-block">
+                            <Button variant="outline" size="lg" className="px-8 py-6 text-lg border-border/50 hover:border-primary/50 hover:bg-bg-light">
+                                <Download className="w-5 h-5 mr-2" />
+                                Resume
+                            </Button>
+                        </a>
                     </div>
                 </div>
 
@@ -155,20 +157,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Stats Strip */}
-            <section className="relative z-10 py-10 border-y border-border/20 bg-bg-light/30 backdrop-blur-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                        {stats.map((stat, index) => (
-                            <div key={index} className="animate-stat opacity-0 flex flex-col items-center justify-center text-center group">
-                                <stat.icon className="w-8 h-8 text-primary mb-3 opacity-80 group-hover:scale-110 transition-transform duration-300" />
-                                <div className="text-4xl font-black text-text mb-1">{stat.value}</div>
-                                <div className="text-sm font-bold text-text-muted uppercase tracking-wider">{stat.label}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+
 
             {/* Philosophy Section */}
             <section className="relative z-10 py-24">
@@ -212,7 +201,7 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <MarqueeTestimonials />
+
 
             {/* Final CTA */}
             <section className="py-24 relative z-10">

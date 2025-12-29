@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
     { icon: Github, href: 'https://github.com/vctry4real/', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/vctry4real', label: 'LinkedIn' },
     { icon: Twitter, href: 'https://x.com/__vctry?t=U-jP5riW_RBO1VSpgmbI7A&s=09', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:victoryjohnson@vctry4real.dev', label: 'Email' },
+    { icon: Mail, href: 'mailto:vctry4real@gmail.com', label: 'Email' },
   ];
 
   const quickLinks = [
@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="text-2xl font-bold text-text block">
-              AV
+              Victory Johnson
             </Link>
             <p className="text-text-muted leading-relaxed max-w-sm">
               Full-stack software engineer crafting exceptional digital experiences with precision and passion.
@@ -70,8 +70,8 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold text-text mb-6">Contact</h4>
             <div className="space-y-3 text-text-muted">
-              <a href="mailto:victoryjohnson@vctry4real.dev" className="block hover:text-primary transition-colors duration-300">
-                victoryjohnson@vctry4real.dev
+              <a href="mailto:vctry4real@gmail.com" className="block hover:text-primary transition-colors duration-300">
+                vctry4real@gmail.com
               </a>
               <p className="text-sm opacity-80">
                 Available for new opportunities
@@ -83,7 +83,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border/30 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-text-muted">
           <p className="flex items-center">
-            © {currentYear} Allwell Onen. All rights reserved.
+            © {currentYear} Victory Johnson. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="flex items-center gap-1">
