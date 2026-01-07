@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, Upload, X, FileText, Download, Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { FormInput } from '../ui/FormField';
 import { resumeSchema, type ResumeFormData } from '../types/admin';
 import { resumeService } from '../lib/adminService';
 import toast from 'react-hot-toast';
@@ -12,9 +13,9 @@ interface ResumeFormProps {
   onSave?: () => void;
 }
 
-export const ResumeForm: React.FC<ResumeFormProps> = ({ 
-  initialData, 
-  onSave 
+export const ResumeForm: React.FC<ResumeFormProps> = ({
+  initialData,
+  onSave
 }) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -74,7 +75,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Resume Management</h3>
+        <h3 className="text-lg font-semibold text-text">Resume Management</h3>
         <Button
           type="button"
           variant="outline"
@@ -87,15 +88,15 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
       </div>
 
       {showPreview && (
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <h4 className="text-lg font-semibold text-white mb-4">Resume Preview</h4>
+        <div className="bg-bg-light/5 backdrop-blur-sm p-6 rounded-xl border border-border/50">
+          <h4 className="text-lg font-semibold text-text mb-4">Resume Preview</h4>
           <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center">
-              <FileText className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 bg-primary/20 border border-primary/30 rounded-xl flex items-center justify-center">
+              <FileText className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h5 className="text-white font-medium">{previewData.file_name || 'Resume.pdf'}</h5>
-              <p className="text-gray-400 text-sm">
+              <h5 className="text-text font-medium">{previewData.file_name || 'Resume.pdf'}</h5>
+              <p className="text-text-muted text-sm">
                 Last updated: {previewData.updated_at ? new Date(previewData.updated_at).toLocaleDateString() : 'Not specified'}
               </p>
             </div>
@@ -117,19 +118,22 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Resume File</label>
+          <label className="block text-sm font-medium text-text-secondary mb-2">Resume File</label>
           <div className="flex space-x-4">
-            <input
-              type="url"
-              {...form.register('file_url')}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="https://example.com/resume.pdf"
-            />
+            <div className="flex-1">
+              <FormInput
+                label=""
+                type="url"
+                {...form.register('file_url')}
+                placeholder="https://example.com/resume.pdf"
+                className="mt-0"
+              />
+            </div>
             <Button
               type="button"
               variant="outline"
               onClick={() => document.getElementById('resume-upload')?.click()}
-              className="flex items-center"
+              className="flex items-center h-[50px] mt-0"
             >
               <Upload className="w-4 h-4 mr-2" />
               Upload
@@ -142,19 +146,16 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
               className="hidden"
             />
           </div>
-          {form.formState.errors.file_url && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.file_url.message}</p>
-          )}
         </div>
 
         {uploadedFile && (
-          <div className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <FileText className="w-6 h-6 text-white" />
+          <div className="flex items-center space-x-4 p-4 bg-bg-light/5 border border-border/50 rounded-xl">
+            <div className="w-12 h-12 bg-primary/20 border border-primary/30 rounded-xl flex items-center justify-center">
+              <FileText className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
-              <p className="text-white font-medium">{uploadedFile.name}</p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-text font-medium">{uploadedFile.name}</p>
+              <p className="text-text-muted text-sm">
                 {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>
@@ -163,7 +164,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
               variant="outline"
               size="sm"
               onClick={removeFile}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -171,30 +172,26 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Filename *</label>
-          <input
-            type="text"
+          <FormInput
+            label="Filename"
             {...form.register('file_name')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            error={form.formState.errors.file_name}
+            required
             placeholder="Victory Johnson - Software Engineer Resume.pdf"
           />
-          {form.formState.errors.file_name && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.file_name.message}</p>
-          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Last Updated</label>
-                      <input
-              type="date"
-              {...form.register('updated_at')}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <FormInput
+            label="Last Updated"
+            type="date"
+            {...form.register('updated_at')}
+          />
         </div>
 
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <h4 className="text-sm font-medium text-gray-300 mb-2">Resume Guidelines</h4>
-          <ul className="text-sm text-gray-400 space-y-1">
+        <div className="bg-bg-light/5 backdrop-blur-sm p-4 rounded-xl border border-border/50">
+          <h4 className="text-sm font-medium text-text mb-2">Resume Guidelines</h4>
+          <ul className="text-sm text-text-muted space-y-1">
             <li>• Format: PDF only</li>
             <li>• File size: Maximum 5MB</li>
             <li>• Include: Contact info, experience, education, skills</li>

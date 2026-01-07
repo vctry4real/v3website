@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { FormInput } from '../ui/FormField';
 import { ImageUpload } from '../ui/ImageUpload';
 import { profileImageSchema, type ProfileImageFormData } from '../types/admin';
 import { profileImageService } from '../lib/adminService';
@@ -14,9 +15,9 @@ interface ProfileImageFormProps {
   onSave?: () => void;
 }
 
-export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({ 
-  initialData, 
-  onSave 
+export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
+  initialData,
+  onSave
 }) => {
   const [showPreview, setShowPreview] = useState(false);
 
@@ -58,7 +59,7 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-white">Profile Image Management</h3>
+        <h3 className="text-lg font-semibold text-text">Profile Image Management</h3>
         <Button
           type="button"
           variant="outline"
@@ -71,10 +72,10 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
       </div>
 
       {showPreview && (
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
-          <h4 className="text-lg font-semibold text-white mb-4">Preview</h4>
+        <div className="bg-bg-light/5 backdrop-blur-sm p-6 rounded-xl border border-border/50">
+          <h4 className="text-lg font-semibold text-text mb-4">Preview</h4>
           <div className="flex items-center space-x-6">
-            <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-700 flex items-center justify-center">
+            <div className="w-32 h-32 rounded-full overflow-hidden bg-surface-muted flex items-center justify-center border border-border/50">
               {previewData.image ? (
                 <img
                   src={previewData.image}
@@ -82,8 +83,8 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="text-gray-400 text-center">
-                  <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center mb-2">
+                <div className="text-text-muted text-center">
+                  <div className="w-16 h-16 bg-surface-elevated rounded-full flex items-center justify-center mb-2 mx-auto">
                     <span className="text-2xl">👤</span>
                   </div>
                   <p className="text-sm">No image</p>
@@ -91,7 +92,7 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
               )}
             </div>
             <div>
-              <h5 className="text-white font-medium">{previewData.alt}</h5>
+              <h5 className="text-text font-medium">{previewData.alt}</h5>
             </div>
           </div>
         </div>
@@ -99,7 +100,7 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Profile Image</label>
+          <label className="block text-sm font-medium text-text-secondary mb-2">Profile Image</label>
           <ImageUpload
             onUpload={handleImageUpload}
             onRemove={handleImageRemove}
@@ -108,26 +109,23 @@ export const ProfileImageForm: React.FC<ProfileImageFormProps> = ({
             maxSize={2}
           />
           {form.formState.errors.image && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.image.message}</p>
+            <p className="text-error text-sm mt-1">{form.formState.errors.image.message}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Alt Text *</label>
-          <input
-            type="text"
+          <FormInput
+            label="Alt Text"
             {...form.register('alt')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            error={form.formState.errors.alt}
+            required
             placeholder="Victory Johnson - Software Engineer"
           />
-          {form.formState.errors.alt && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.alt.message}</p>
-          )}
         </div>
 
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <h4 className="text-sm font-medium text-gray-300 mb-2">Image Guidelines</h4>
-          <ul className="text-sm text-gray-400 space-y-1">
+        <div className="bg-bg-light/5 backdrop-blur-sm p-4 rounded-xl border border-border/50">
+          <h4 className="text-sm font-medium text-text mb-2">Image Guidelines</h4>
+          <ul className="text-sm text-text-muted space-y-1">
             <li>• Recommended size: 400x400 pixels or larger</li>
             <li>• Format: JPG, PNG, or WebP</li>
             <li>• File size: Under 2MB</li>

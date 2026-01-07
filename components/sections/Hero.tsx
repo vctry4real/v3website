@@ -56,7 +56,7 @@ export const Hero: React.FC = () => {
     return (
         <section className="min-h-screen flex items-center relative overflow-hidden bg-bg-light">
             {/* Animated Background Marquee Text */}
-            <div className="absolute inset-0 flex flex-col justify-center gap-8 overflow-hidden pointer-events-none select-none">
+            <div className="absolute inset-0 flex flex-col justify-center gap-4 sm:gap-8 overflow-hidden pointer-events-none select-none">
                 {marqueeLines.map((line, index) => (
                     <div
                         key={index}
@@ -65,7 +65,7 @@ export const Hero: React.FC = () => {
                             animation: `marquee-${index % 2 === 0 ? 'left' : 'right'} ${40 + index * 5}s linear infinite`
                         }}
                     >
-                        <span className="text-[12vw] font-black text-text/4 tracking-tighter leading-none inline-block">
+                        <span className="text-[25vh] sm:text-[12vw] font-black text-text/5 tracking-tighter leading-none inline-block">
                             {line.repeat(3)}
                         </span>
                     </div>

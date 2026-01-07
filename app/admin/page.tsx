@@ -446,41 +446,41 @@ export default function AdminPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 flex">
+        <div className="min-h-screen bg-bg-dark flex">
             {/* Mobile sidebar overlay */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
 
             {/* Sidebar */}
             <div className={`
-        fixed inset-y-0 left-0 z-50 w-64 sm:w-72 bg-gray-800 border-r border-gray-700 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col
+        fixed inset-y-0 left-0 z-50 w-64 sm:w-72 bg-bg-light/50 backdrop-blur-xl border-r border-border transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
                 {/* Sidebar Header */}
-                <div className="flex items-center justify-between h-16 px-4 sm:px-6 border-b border-gray-700">
+                <div className="flex items-center justify-between h-16 px-4 sm:px-6 border-b border-border">
                     <div className="flex items-center min-w-0 flex-1">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <Settings className="w-5 h-5 text-white" />
+                        <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Settings className="w-5 h-5 text-primary" />
                         </div>
-                        <h1 className="ml-3 text-lg sm:text-xl font-bold text-white truncate">Admin Panel</h1>
+                        <h1 className="ml-3 text-lg sm:text-xl font-bold text-text truncate">Admin Panel</h1>
                     </div>
                     <button
                         onClick={() => setSidebarOpen(false)}
-                        className="lg:hidden p-1 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 flex-shrink-0"
+                        className="lg:hidden p-1 rounded-md text-text-muted hover:text-text hover:bg-white/5 flex-shrink-0"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 {/* Back to Portfolio Button */}
-                <div className="px-4 sm:px-6 py-3 border-b border-gray-700">
+                <div className="px-4 sm:px-6 py-3 border-b border-border">
                     <Link
                         href="/"
-                        className="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-blue-400 hover:text-blue-300 hover:bg-blue-600/10 rounded-lg transition-all duration-200"
+                        className="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-primary hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-200"
                     >
                         <Home className="w-4 h-4 mr-2" />
                         <span className="hidden sm:inline">Back to Portfolio</span>
@@ -489,14 +489,14 @@ export default function AdminPage() {
                 </div>
 
                 {/* User Info */}
-                <div className="px-4 sm:px-6 py-4 border-b border-gray-700">
+                <div className="px-4 sm:px-6 py-4 border-b border-border">
                     <div className="flex items-center">
-                        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                            <User className="w-5 h-5 text-white" />
+                        <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <User className="w-5 h-5 text-primary" />
                         </div>
                         <div className="ml-3 min-w-0 flex-1">
-                            <p className="text-sm font-medium text-white truncate">{user?.email || 'Admin'}</p>
-                            <p className="text-xs text-gray-400">Administrator</p>
+                            <p className="text-sm font-medium text-text truncate">{user?.email || 'Admin'}</p>
+                            <p className="text-xs text-text-muted">Administrator</p>
                         </div>
                     </div>
                 </div>
@@ -505,7 +505,7 @@ export default function AdminPage() {
                 <nav className="flex-1 px-2 sm:px-4 py-6 space-y-6 overflow-y-auto min-h-0">
                     {Object.entries(groupedTabs).map(([category, categoryTabs]) => (
                         <div key={category}>
-                            <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                            <h3 className="px-2 text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
                                 {category}
                             </h3>
                             <div className="space-y-1">
@@ -519,12 +519,12 @@ export default function AdminPage() {
                                         className={`
                       w-full flex items-center px-2 sm:px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200
                       ${activeTab === tab.id
-                                                ? 'bg-blue-600 text-white shadow-lg'
-                                                : 'text-gray-300 hover:text-white hover:bg-gray-700'
+                                                ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_10px_rgba(var(--primary),0.2)]'
+                                                : 'text-text-muted hover:text-text hover:bg-white/5'
                                             }
                     `}
                                     >
-                                        <tab.icon className={`w-4 h-4 mr-2 sm:mr-3 flex-shrink-0 ${activeTab === tab.id ? 'text-white' : 'text-gray-400'}`} />
+                                        <tab.icon className={`w-4 h-4 mr-2 sm:mr-3 flex-shrink-0 ${activeTab === tab.id ? 'text-primary' : 'text-text-muted'}`} />
                                         <span className="truncate">{tab.label}</span>
                                     </button>
                                 ))}
@@ -534,11 +534,11 @@ export default function AdminPage() {
                 </nav>
 
                 {/* Sidebar Footer */}
-                <div className="px-2 sm:px-4 py-4 border-t border-gray-700">
+                <div className="px-2 sm:px-4 py-4 border-t border-border">
                     <Button
                         variant="outline"
                         size="sm"
-                        className="w-full justify-start text-gray-300 hover:text-white"
+                        className="w-full justify-start text-text-muted hover:text-text border-border hover:border-text-muted"
                         onClick={() => {
                             // Handle logout
                             window.location.href = '/';
@@ -553,20 +553,20 @@ export default function AdminPage() {
             {/* Main Content */}
             <div className="flex-1 flex flex-col lg:ml-0 min-w-0">
                 {/* Top Header */}
-                <header className="bg-gray-800 border-b border-gray-700 px-4 sm:px-6 py-4">
+                <header className="bg-bg-dark/80 backdrop-blur-md border-b border-border px-4 sm:px-6 py-4 sticky top-0 z-30">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center min-w-0 flex-1">
                             <button
                                 onClick={() => setSidebarOpen(true)}
-                                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 mr-3 sm:mr-4 flex-shrink-0"
+                                className="lg:hidden p-2 rounded-md text-text-muted hover:text-text hover:bg-white/5 mr-3 sm:mr-4 flex-shrink-0"
                             >
                                 <Menu className="w-5 h-5" />
                             </button>
                             <div className="min-w-0 flex-1">
-                                <h2 className="text-lg sm:text-xl font-semibold text-white truncate">
+                                <h2 className="text-lg sm:text-xl font-semibold text-text truncate">
                                     {tabs.find(t => t.id === activeTab)?.label}
                                 </h2>
-                                <p className="text-xs sm:text-sm text-gray-400 truncate">
+                                <p className="text-xs sm:text-sm text-text-muted truncate">
                                     Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()} content
                                 </p>
                             </div>
@@ -575,19 +575,19 @@ export default function AdminPage() {
                         {/* Quick Stats */}
                         <div className="hidden md:flex items-center space-x-2 lg:space-x-6 text-xs lg:text-sm">
                             <div className="flex items-center space-x-1 lg:space-x-2">
-                                <span className="text-gray-400 hidden lg:inline">Projects:</span>
-                                <span className="text-gray-400 lg:hidden">P:</span>
-                                <span className="text-white font-medium">{currentProjects.length}</span>
+                                <span className="text-text-muted hidden lg:inline">Projects:</span>
+                                <span className="text-text-muted lg:hidden">P:</span>
+                                <span className="text-primary font-medium">{currentProjects.length}</span>
                             </div>
                             <div className="flex items-center space-x-1 lg:space-x-2">
-                                <span className="text-gray-400 hidden lg:inline">Messages:</span>
-                                <span className="text-gray-400 lg:hidden">M:</span>
-                                <span className="text-white font-medium">{currentContactMessages.length}</span>
+                                <span className="text-text-muted hidden lg:inline">Messages:</span>
+                                <span className="text-text-muted lg:hidden">M:</span>
+                                <span className="text-primary font-medium">{currentContactMessages.length}</span>
                             </div>
                             <div className="flex items-center space-x-1 lg:space-x-2">
-                                <span className="text-gray-400 hidden lg:inline">Appointments:</span>
-                                <span className="text-gray-400 lg:hidden">A:</span>
-                                <span className="text-white font-medium">{currentAppointments.length}</span>
+                                <span className="text-text-muted hidden lg:inline">Appointments:</span>
+                                <span className="text-text-muted lg:hidden">A:</span>
+                                <span className="text-primary font-medium">{currentAppointments.length}</span>
                             </div>
                         </div>
                     </div>
@@ -596,7 +596,7 @@ export default function AdminPage() {
                 {/* Main Content Area */}
                 <main className="flex-1 p-3 sm:p-4 lg:p-6 overflow-x-auto">
                     <div className="min-w-max max-w-6xl mx-auto">
-                        <div className="bg-gray-800 rounded-lg sm:rounded-xl p-4 sm:p-6 lg:p-8">
+                        <div className="bg-bg-light/10 border border-border/50 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-6 lg:p-8">
                             {renderForm()}
                         </div>
                     </div>

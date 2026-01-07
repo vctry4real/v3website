@@ -52,57 +52,68 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-bg-dark flex items-center justify-center relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-20 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl opacity-20 translate-y-1/2"></div>
+      </div>
+
+      <div className="bg-surface-elevated/10 backdrop-blur-xl border border-white/10 p-8 rounded-2xl shadow-2xl w-full max-w-md relative z-10">
+        <div className="absolute inset-0 bg-linear-to-tr from-primary/5 to-purple-500/5 rounded-2xl pointer-events-none"></div>
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white">Admin Login</h2>
-          <p className="text-gray-400 mt-2">Sign in to access the admin panel</p>
+          <div className="w-16 h-16 bg-linear-to-tr from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-border/50">
+            <LogIn className="w-8 h-8 text-primary" />
+          </div>
+          <h2 className="text-3xl font-bold text-text">Admin Login</h2>
+          <p className="text-text-muted mt-2">Sign in to access the admin panel</p>
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-text-muted mb-2">
               Email Address
             </label>
             <input
               type="email"
               {...form.register('email')}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 bg-surface-muted border border-border-muted rounded-lg text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
               placeholder="admin@example.com"
             />
             {form.formState.errors.email && (
-              <p className="text-red-400 text-sm mt-1">{form.formState.errors.email.message}</p>
+              <p className="text-error text-sm mt-1">{form.formState.errors.email.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-text-muted mb-2">
               Password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 {...form.register('password')}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                className="w-full px-4 py-3 bg-surface-muted border border-border-muted rounded-lg text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-12 transition-all duration-200"
                 placeholder="Enter your password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-text-muted hover:text-text transition-colors"
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
             {form.formState.errors.password && (
-              <p className="text-red-400 text-sm mt-1">{form.formState.errors.password.message}</p>
+              <p className="text-error text-sm mt-1">{form.formState.errors.password.message}</p>
             )}
           </div>
 
           <Button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center"
+            className="w-full flex items-center justify-center py-3"
+            variant="primary"
           >
             {loading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -116,7 +127,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         </form>
 
         <div className="text-center">
-          <p className="text-gray-400 text-sm">
+          <p className="text-text-muted text-sm">
             Don't have an account? Contact the administrator.
           </p>
         </div>

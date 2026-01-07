@@ -105,8 +105,8 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-2xl font-bold text-white mb-2">Blog Posts</h3>
-          <p className="text-gray-400">Manage your blog posts and share your insights</p>
+          <h3 className="text-2xl font-bold text-text mb-2">Blog Posts</h3>
+          <p className="text-text-muted">Manage your blog posts and share your insights</p>
         </div>
         <Button onClick={() => setShowForm(true)} className="flex items-center">
           <Plus className="w-4 h-4 mr-2" />
@@ -126,7 +126,7 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
 
       {/* Results Summary */}
       {blogPosts.length > 0 && (
-        <div className="flex items-center justify-between text-sm text-gray-400">
+        <div className="flex items-center justify-between text-sm text-text-muted">
           <span>
             Showing {filteredBlogPosts.length} of {blogPosts.length} blog posts
             {(searchValue || activeFilters.length > 0) && ' (filtered)'}
@@ -137,7 +137,7 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
                 setSearchValue('');
                 setActiveFilters([]);
               }}
-              className="text-blue-400 hover:text-blue-300"
+              className="text-primary hover:text-primary/80"
             >
               Clear all filters
             </button>
@@ -148,9 +148,9 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
       {/* Blog Posts List */}
       {blogPosts.length === 0 ? (
         <div className="text-center py-12">
-          <FileText className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-white mb-2">No blog posts yet</h3>
-          <p className="text-gray-400 mb-6">Add your first blog post to share your insights</p>
+          <FileText className="w-16 h-16 text-text-muted mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-text mb-2">No blog posts yet</h3>
+          <p className="text-text-muted mb-6">Add your first blog post to share your insights</p>
           <Button onClick={() => setShowForm(true)}>
             Add Your First Blog Post
           </Button>
@@ -160,7 +160,7 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
           {filteredBlogPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-gray-800 rounded-lg p-6 hover:bg-gray-750 transition-colors duration-200"
+              className="bg-bg-light/5 border border-border/50 rounded-xl p-6 hover:bg-bg-light/10 transition-all duration-200 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -174,19 +174,19 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
                     )}
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
-                        <h4 className="text-lg font-semibold text-white">{post.title}</h4>
+                        <h4 className="text-lg font-semibold text-text">{post.title}</h4>
                         {post.featured && (
-                          <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs">
+                          <span className="bg-primary/20 text-primary px-2 py-1 rounded-full text-xs font-medium">
                             Featured
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-300 text-sm mb-2">{post.summary}</p>
+                      <p className="text-text-secondary text-sm mb-2">{post.summary}</p>
                     </div>
                   </div>
-                  
+
                   {/* Meta Information */}
-                  <div className="flex items-center space-x-4 text-sm text-gray-400 mb-3">
+                  <div className="flex items-center space-x-4 text-sm text-text-muted mb-3">
                     {post.createdAt && (
                       <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
@@ -200,14 +200,14 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
                       </div>
                     )}
                   </div>
-                  
+
                   {/* Tags */}
                   {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-3">
                       {post.tags.map((tag, index) => (
                         <span
                           key={index}
-                          className="flex items-center px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs"
+                          className="flex items-center px-2 py-1 bg-surface-muted text-text-muted rounded text-xs border border-border-muted"
                         >
                           <Tag className="w-3 h-3 mr-1" />
                           {tag}
@@ -216,12 +216,13 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-2 ml-4">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleEdit(post)}
+                    className="border-border hover:bg-surface-muted text-text-muted hover:text-text"
                   >
                     <Edit className="w-4 h-4" />
                   </Button>
@@ -229,7 +230,7 @@ export const BlogList: React.FC<BlogListProps> = ({ onSave }) => {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDelete(post.id!)}
-                    className="text-red-400 hover:text-red-300"
+                    className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

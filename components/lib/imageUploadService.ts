@@ -25,21 +25,30 @@ export class ImageUploadService {
    */
   static async uploadToServer(file: File): Promise<ImageUploadResult> {
     try {
-      const formData = new FormData();
-      formData.append('image', file);
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+      const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-      const response = await fetch('/api/upload-image', {
+      if (!cloudName || !uploadPreset) {
+        throw new Error('Missing Cloudinary configuration (Cloud Name or Upload Preset)');
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', uploadPreset);
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(`Upload failed: ${response.statusText}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || `Upload failed: ${response.statusText}`);
       }
 
       const result = await response.json();
       return {
-        url: result.url,
+        url: result.secure_url,
         success: true,
       };
     } catch (error) {

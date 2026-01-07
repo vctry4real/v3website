@@ -88,11 +88,13 @@ interface TextParallaxContentProps {
 
 interface StickyImageProps {
   imgUrl: string;
+  targetRef: React.RefObject<HTMLDivElement | null>;
 }
 
 interface OverlayCopyProps {
   subheading: string;
   heading: string;
+  targetRef: React.RefObject<HTMLDivElement | null>;
 }
 
 interface CaseStudyContentProps {
@@ -128,6 +130,8 @@ const CaseStudiesSection: React.FC = () => {
 };
 
 const TextParallaxContent: React.FC<TextParallaxContentProps> = ({ imgUrl, subheading, heading, children }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <div
       style={{
@@ -135,20 +139,19 @@ const TextParallaxContent: React.FC<TextParallaxContentProps> = ({ imgUrl, subhe
         paddingRight: IMG_PADDING,
       }}
     >
-      <div className="relative h-[120vh]">
-        <StickyImage imgUrl={imgUrl} />
-        <OverlayCopy heading={heading} subheading={subheading} />
+      <div ref={containerRef} className="relative h-[100vh]">
+        <StickyImage imgUrl={imgUrl} targetRef={containerRef} />
+        <OverlayCopy heading={heading} subheading={subheading} targetRef={containerRef} />
       </div>
       {children}
     </div>
   );
 };
 
-const StickyImage: React.FC<StickyImageProps> = ({ imgUrl }) => {
-  const targetRef = useRef<HTMLDivElement>(null);
+const StickyImage: React.FC<StickyImageProps> = ({ imgUrl, targetRef }) => {
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ["end end", "end start"],
+    offset: ["start start", "end start"],
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
@@ -161,11 +164,9 @@ const StickyImage: React.FC<StickyImageProps> = ({ imgUrl }) => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: `calc(100vh - ${IMG_PADDING * 2}px)`,
-        top: IMG_PADDING,
         scale,
       }}
-      ref={targetRef}
-      className="sticky z-0 overflow-hidden rounded-3xl"
+      className="sticky z-0 overflow-hidden rounded-3xl top-0"
     >
       <motion.div
         className="absolute inset-0 bg-neutral-950/70"
@@ -177,15 +178,14 @@ const StickyImage: React.FC<StickyImageProps> = ({ imgUrl }) => {
   );
 };
 
-const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
-  const targetRef = useRef<HTMLDivElement>(null);
+const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading, targetRef }) => {
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ["start end", "end start"],
+    offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
-  const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [1, -650]);
+  const opacity = useTransform(scrollYProgress, [0.3, 0.3, 0.5, 0.7], [0, 1, 1, 0]);
 
   return (
     <motion.div
@@ -193,49 +193,50 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
         y,
         opacity,
       }}
-      ref={targetRef}
-      className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
+      className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center text-white pointer-events-none"
     >
-      <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
+      <p className="mb-2 text-center text-base sm:text-lg md:text-2xl font-medium px-4">
         {subheading}
       </p>
-      <p className="text-center text-4xl font-bold md:text-7xl px-4">{heading}</p>
+      <p className="text-center text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold px-4 max-w-5xl">
+        {heading}
+      </p>
     </motion.div>
   );
 };
 
 const CaseStudyContent: React.FC<CaseStudyContentProps> = ({ study }) => (
-  <div className="mx-auto max-w-6xl px-4 pb-24 pt-12">
-    <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+  <div className="mx-auto max-w-6xl px-4 pb-16 md:pb-24 pt-8 md:pt-12">
+    <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-12">
       {/* Left Column - Challenge & Solution */}
-      <div className="col-span-1 md:col-span-5 space-y-8">
-        {/* Service Badge */}
-        {/* <div>
-          <span className="inline-block px-4 py-2 bg-primary/20 text-primary text-sm font-semibold rounded-full border border-primary/30">
-            {study.industry}
-          </span>
-        </div> */}
-
+      <div className="col-span-1 md:col-span-5 space-y-6 md:space-y-8">
         {/* Challenge */}
         <div>
-          <div className="flex items-center mb-3">
-            <h3 className="text-xl font-bold text-text uppercase tracking-wide">The Challenge</h3>
-          </div>
-          <p className="text-lg text-text-muted leading-relaxed">{study.challenge}</p>
+          <h3 className="text-lg md:text-xl font-bold text-text uppercase tracking-wide mb-3">
+            The Challenge
+          </h3>
+          <p className="text-base md:text-lg text-text-muted leading-relaxed">
+            {study.challenge}
+          </p>
         </div>
 
         {/* Solution */}
         <div>
-          <div className="flex items-center mb-3">
-            <h3 className="text-xl font-bold text-text uppercase tracking-wide">Our Solution</h3>
-          </div>
-          <p className="text-lg text-text-muted leading-relaxed">{study.solution}</p>
+          <h3 className="text-lg md:text-xl font-bold text-text uppercase tracking-wide mb-3">
+            Our Solution
+          </h3>
+          <p className="text-base md:text-lg text-text-muted leading-relaxed">
+            {study.solution}
+          </p>
         </div>
 
         {/* Tech Stack */}
         <div className="flex flex-wrap gap-2">
           {study.tech.map((tech, i) => (
-            <span key={i} className="px-3 py-1 bg-bg text-text-muted text-sm rounded-full border border-border">
+            <span
+              key={i}
+              className="px-3 py-1.5 bg-bg text-text-muted text-xs md:text-sm rounded-full border border-border"
+            >
               {tech}
             </span>
           ))}
@@ -243,37 +244,39 @@ const CaseStudyContent: React.FC<CaseStudyContentProps> = ({ study }) => (
       </div>
 
       {/* Right Column - Features & Impact */}
-      <div className="col-span-1 md:col-span-7 space-y-8">
+      <div className="col-span-1 md:col-span-7 space-y-6 md:space-y-8">
         {/* Key Features */}
-        <div className="bg-bg/50 rounded-2xl p-6 border border-border">
-          <h3 className="text-xl font-bold text-text mb-4">Key Features</h3>
+        <div className="bg-bg/50 rounded-xl md:rounded-2xl p-5 md:p-6 border border-border">
+          <h3 className="text-lg md:text-xl font-bold text-text mb-4">Key Features</h3>
           <div className="space-y-3">
             {study.keyFeatures.map((feature, i) => (
               <div key={i} className="flex items-start">
-                <CheckCircle className="w-5 h-5 text-success mr-3 flex-shrink-0 mt-1" />
-                <span className="text-text-muted">{feature}</span>
+                <CheckCircle className="w-5 h-5 text-success mr-3 flex-shrink-0 mt-0.5" />
+                <span className="text-sm md:text-base text-text-muted leading-relaxed">
+                  {feature}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Impact */}
-        <div className="bg- rounded-2xl p-6 border border-primary/30">
+        <div className="bg-primary/5 rounded-xl md:rounded-2xl p-5 md:p-6 border border-primary/30">
           <div className="flex items-center mb-4">
-            <Award className="w-6 h-6 text-primary mr-2" />
-            <h3 className="text-xl font-bold text-text">Impact & Results</h3>
+            <Award className="w-5 h-5 md:w-6 md:h-6 text-primary mr-2" />
+            <h3 className="text-lg md:text-xl font-bold text-text">Impact & Results</h3>
           </div>
           <div className="space-y-3">
             {study.impact.map((result, i) => (
               <div key={i} className="flex items-start">
-                <TrendingUp className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-1" />
-                <span className="text-text font-medium">{result}</span>
+                <TrendingUp className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                <span className="text-sm md:text-base text-text font-medium leading-relaxed">
+                  {result}
+                </span>
               </div>
             ))}
           </div>
         </div>
-
-
       </div>
     </div>
   </div>

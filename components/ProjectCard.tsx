@@ -47,7 +47,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, vi
 
             {/* Project Image */}
             {project.image && (
-                <div className={`overflow-hidden ${viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-video'}`}>
+                <div className={`overflow-hidden ${viewMode === 'list' ? 'w-64 shrink-0' : 'aspect-video'}`}>
                     <img
                         src={project.image}
                         alt={project.title}

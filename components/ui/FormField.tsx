@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { FieldError } from 'react-hook-form';
-import { AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { AlertCircle, Info } from 'lucide-react';
 
 interface FormFieldProps {
   label: string;
@@ -34,7 +34,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         {children}
 
         {/* Status Icons */}
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
           {hasError && (
             <AlertCircle className="w-5 h-5 text-error" />
           )}
@@ -44,7 +44,7 @@ export const FormField: React.FC<FormFieldProps> = ({
       {/* Description */}
       {description && !hasError && (
         <div className="flex items-start space-x-2 text-sm text-text-muted">
-          <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <Info className="w-4 h-4 mt-0.5 shrink-0" />
           <p>{description}</p>
         </div>
       )}
@@ -52,7 +52,7 @@ export const FormField: React.FC<FormFieldProps> = ({
       {/* Error Message */}
       {hasError && (
         <div className="flex items-start space-x-2 text-sm text-error">
-          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
           <p>{error.message}</p>
         </div>
       )}
@@ -67,7 +67,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
 }
 
-export const FormInput: React.FC<InputProps> = ({
+export const FormInput = forwardRef<HTMLInputElement, InputProps>(({
   error,
   label,
   name,
@@ -75,7 +75,7 @@ export const FormInput: React.FC<InputProps> = ({
   required = false,
   className = '',
   ...props
-}) => {
+}, ref) => {
   return (
     <FormField
       label={label}
@@ -85,15 +85,19 @@ export const FormInput: React.FC<InputProps> = ({
       description={description}
     >
       <input
+        ref={ref}
         {...props}
+        name={name}
         className={`w-full px-4 py-3 bg-surface-muted border rounded-lg text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 ${error
-            ? 'border-error focus:ring-error'
-            : 'border-border-muted focus:border-primary'
+          ? 'border-error focus:ring-error'
+          : 'border-border-muted focus:border-primary'
           } ${className}`}
       />
     </FormField>
   );
-};
+});
+
+FormInput.displayName = 'FormInput';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: FieldError;
@@ -102,7 +106,7 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
   required?: boolean;
 }
 
-export const FormTextarea: React.FC<TextareaProps> = ({
+export const FormTextarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
   error,
   label,
   name,
@@ -110,7 +114,7 @@ export const FormTextarea: React.FC<TextareaProps> = ({
   required = false,
   className = '',
   ...props
-}) => {
+}, ref) => {
   return (
     <FormField
       label={label}
@@ -120,15 +124,19 @@ export const FormTextarea: React.FC<TextareaProps> = ({
       description={description}
     >
       <textarea
+        ref={ref}
         {...props}
+        name={name}
         className={`w-full px-4 py-3 bg-surface-muted border rounded-lg text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none transition-colors duration-200 ${error
-            ? 'border-error focus:ring-error'
-            : 'border-border-muted focus:border-primary'
+          ? 'border-error focus:ring-error'
+          : 'border-border-muted focus:border-primary'
           } ${className}`}
       />
     </FormField>
   );
-};
+});
+
+FormTextarea.displayName = 'FormTextarea';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: FieldError;
@@ -138,7 +146,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[];
 }
 
-export const FormSelect: React.FC<SelectProps> = ({
+export const FormSelect = forwardRef<HTMLSelectElement, SelectProps>(({
   error,
   label,
   name,
@@ -147,7 +155,7 @@ export const FormSelect: React.FC<SelectProps> = ({
   options,
   className = '',
   ...props
-}) => {
+}, ref) => {
   return (
     <FormField
       label={label}
@@ -157,10 +165,12 @@ export const FormSelect: React.FC<SelectProps> = ({
       description={description}
     >
       <select
+        ref={ref}
         {...props}
+        name={name}
         className={`w-full px-4 py-3 bg-surface-muted border rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-200 ${error
-            ? 'border-error focus:ring-error'
-            : 'border-border-muted focus:border-primary'
+          ? 'border-error focus:ring-error'
+          : 'border-border-muted focus:border-primary'
           } ${className}`}
       >
         <option value="">Select an option</option>
@@ -172,4 +182,6 @@ export const FormSelect: React.FC<SelectProps> = ({
       </select>
     </FormField>
   );
-};
+});
+
+FormSelect.displayName = 'FormSelect';

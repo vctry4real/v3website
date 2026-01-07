@@ -48,20 +48,18 @@ export const Projects: React.FC = () => {
         <section id="projects" className="py-24 bg-transparent relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header with See All Button */}
-                <div className="projects-header flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div className="w-full md:w-auto">
+                {/* Header with See All Button */}
+                <div className="projects-header flex flex-col items-center text-center mb-16 gap-6">
+                    <div className="w-full max-w-2xl">
                         <h3 className="text-sm font-medium text-primary uppercase tracking-[0.2em] mb-4">
                             Featured Work
                         </h3>
                         <h2 className="text-3xl md:text-5xl font-bold text-text mb-4">
                             A showcase of my recent works
                         </h2>
-                        <p className="text-xl text-text-muted max-w-2xl leading-relaxed">
+                        <p className="text-xl text-text-muted leading-relaxed mb-8">
                             Demonstrating expertise across different technologies and domains
                         </p>
-                    </div>
-                    {/* See All Button - Aligned with title on desktop */}
-                    <div className="w-full md:w-auto flex justify-start md:justify-end">
                         <Link
                             href="/portfolio"
                             className="group inline-flex items-center text-text hover:text-primary transition-colors duration-300 border-b border-transparent hover:border-primary pb-1"
@@ -73,42 +71,52 @@ export const Projects: React.FC = () => {
                 </div>
 
                 {/* Projects Grid - 2x2 */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    {projects.map((project, index) => (
-                        <Link
-                            key={project.id || index}
-                            href={`/portfolio/${project.slug}`}
-                            className="project-card group relative block w-full aspect-[4/3] overflow-hidden rounded-sm bg-bg-light"
-                        >
-                            {/* Image with Zoom Effect */}
-                            <div className="absolute inset-0 w-full h-full overflow-hidden">
-                                {project.image && (
-                                    <div
-                                        className="w-full h-full bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                                        style={{ backgroundImage: `url(${project.image})` }}
-                                    >
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                                    </div>
-                                )}
-                            </div>
+                {loading ? (
+                    <div className="flex justify-center py-12">
+                        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                ) : projects.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                        {projects.map((project, index) => (
+                            <Link
+                                key={project.id || index}
+                                href={`/portfolio/${project.slug}`}
+                                className="project-card group relative block w-full aspect-[4/3] overflow-hidden rounded-sm bg-bg-light"
+                            >
+                                {/* Image with Zoom Effect */}
+                                <div className="absolute inset-0 w-full h-full overflow-hidden">
+                                    {project.image && (
+                                        <div
+                                            className="w-full h-full bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
+                                            style={{ backgroundImage: `url(${project.image})` }}
+                                        >
+                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                                        </div>
+                                    )}
+                                </div>
 
-                            {/* Content Overlay */}
-                            <div className="absolute inset-x-0 bottom-0 p-8 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <div className="flex justify-between items-end">
-                                    <div>
-                                        <span className="inline-block px-3 py-1 mb-3 text-xs font-medium text-black bg-white/90 rounded-full backdrop-blur-sm">
-                                            {project.category}
-                                        </span>
-                                        <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                                    </div>
-                                    <div className="bg-primary rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                                        <ArrowUpRight className="w-5 h-5 text-black" />
+                                {/* Content Overlay */}
+                                <div className="absolute inset-x-0 bottom-0 p-8 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    <div className="flex justify-between items-end">
+                                        <div>
+                                            <span className="inline-block px-3 py-1 mb-3 text-xs font-medium text-black bg-white/90 rounded-full backdrop-blur-sm">
+                                                {project.category}
+                                            </span>
+                                            <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
+                                        </div>
+                                        <div className="bg-primary rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                                            <ArrowUpRight className="w-5 h-5 text-black" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-12 border border-dashed border-border/30 rounded-lg">
+                        <p className="text-text-muted">Unable to load projects at this time.</p>
+                    </div>
+                )}
             </div>
         </section>
     );

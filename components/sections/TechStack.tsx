@@ -46,7 +46,7 @@ export default function TechStack() {
             </div>
 
             <div className="relative w-full">
-                <div className="flex animate-marquee hover:[animation-play-state:paused] whitespace-nowrap">
+                <div className="flex animate-marquee hover:[animation-play-state:paused] whitespace-nowrap" style={{ animationDuration: '10s' }}>
                     {marqueeTechs.map((tech, index) => {
                         const Icon = tech.icon;
                         return (

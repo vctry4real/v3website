@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, Plus, X } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { FormInput, FormTextarea } from '../ui/FormField';
 import { educationSchema, type EducationFormData } from '../types/admin';
 import { educationService, type EducationData } from '../lib/adminService';
 import toast from 'react-hot-toast';
@@ -98,87 +99,61 @@ export const EducationForm: React.FC<EducationFormProps> = ({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Degree *</label>
-          <input
-            type="text"
-            {...form.register('degree')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Bachelor of Science in Computer Science"
-          />
-          {form.formState.errors.degree && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.degree.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">University *</label>
-          <input
-            type="text"
-            {...form.register('university')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="University name"
-          />
-          {form.formState.errors.university && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.university.message}</p>
-          )}
-        </div>
+        <FormInput
+          label="Degree"
+          {...form.register('degree')}
+          error={form.formState.errors.degree}
+          required
+          placeholder="Bachelor of Science in Computer Science"
+        />
+        <FormInput
+          label="University"
+          {...form.register('university')}
+          error={form.formState.errors.university}
+          required
+          placeholder="University name"
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Duration *</label>
-          <input
-            type="text"
-            {...form.register('duration')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="2018 - 2022"
-          />
-          {form.formState.errors.duration && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.duration.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Location *</label>
-          <input
-            type="text"
-            {...form.register('location')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Berkeley, CA"
-          />
-          {form.formState.errors.location && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.location.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">GPA</label>
-          <input
-            type="text"
-            {...form.register('gpa')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="3.8/4.0"
-          />
-        </div>
+        <FormInput
+          label="Duration"
+          {...form.register('duration')}
+          error={form.formState.errors.duration}
+          required
+          placeholder="2018 - 2022"
+        />
+        <FormInput
+          label="Location"
+          {...form.register('location')}
+          error={form.formState.errors.location}
+          required
+          placeholder="Berkeley, CA"
+        />
+        <FormInput
+          label="GPA"
+          {...form.register('gpa')}
+          error={form.formState.errors.gpa}
+          placeholder="3.8/4.0"
+        />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Description *</label>
-        <textarea
+        <FormTextarea
+          label="Description"
           {...form.register('description')}
+          error={form.formState.errors.description}
+          required
           rows={4}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           placeholder="Description of your studies and focus areas"
         />
-        {form.formState.errors.description && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.description.message}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Logo URL</label>
-        <input
+        <FormInput
+          label="Logo URL"
           type="url"
           {...form.register('logo')}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="https://example.com/university-logo.png"
         />
       </div>
@@ -186,7 +161,7 @@ export const EducationForm: React.FC<EducationFormProps> = ({
       {/* Achievements */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-300">Key Achievements *</label>
+          <label className="block text-sm font-medium text-text-muted">Key Achievements *</label>
           <Button
             type="button"
             variant="outline"
@@ -200,24 +175,25 @@ export const EducationForm: React.FC<EducationFormProps> = ({
         </div>
         {achievements.map((_, index) => (
           <div key={index} className="flex items-center space-x-2 mb-2">
-            <input
+            <FormInput
+              label=""
               {...form.register(`achievements.${index}`)}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Achievement or honor"
+              className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => removeAchievement(index)}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error mt-0.5"
             >
               <X className="w-4 h-4" />
             </Button>
           </div>
         ))}
         {form.formState.errors.achievements && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.achievements.message}</p>
+          <p className="text-error text-sm mt-1">{form.formState.errors.achievements.message}</p>
         )}
       </div>
 

@@ -154,7 +154,7 @@ export default function BlogPage() {
                                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300"></div>
                                         </div>
                                     )}
-                                    <div className="p-8 flex flex-col flex-grow">
+                                    <div className="p-8 flex flex-col grow">
                                         <div className="flex items-center space-x-4 text-xs font-medium text-text-muted mb-4 uppercase tracking-wider">
                                             <div className="flex items-center space-x-1">
                                                 <Calendar className="w-3 h-3" />
@@ -172,7 +172,7 @@ export default function BlogPage() {
                                             {post.title}
                                         </h2>
 
-                                        <p className="text-text-muted mb-6 leading-relaxed line-clamp-3 text-sm flex-grow">
+                                        <p className="text-text-muted mb-6 leading-relaxed line-clamp-3 text-sm grow">
                                             {post.summary}
                                         </p>
 

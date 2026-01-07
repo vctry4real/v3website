@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, Plus, X, Eye, EyeOff } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ImageUpload } from '../ui/ImageUpload';
+import { FormInput, FormTextarea, FormSelect } from '../ui/FormField';
 import { projectSchema, type ProjectFormData } from '../types/admin';
 import { projectService, type ProjectData } from '../lib/adminService';
 import { imageUploadService, type UploadResult } from '../lib/imageUploadService';
@@ -175,39 +176,30 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Project Title *</label>
-          <input
-            type="text"
-            {...form.register('title')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="E-Commerce Platform"
-          />
-          {form.formState.errors.title && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.title.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Category *</label>
-          <select
-            {...form.register('category')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Select category</option>
-            <option value="fullstack">Fullstack</option>
-            <option value="backend">Backend</option>
-            <option value="frontend">Frontend</option>
-          </select>
-          {form.formState.errors.category && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.category.message}</p>
-          )}
-        </div>
+        <FormInput
+          label="Project Title"
+          {...form.register('title')}
+          error={form.formState.errors.title}
+          required
+          placeholder="E-Commerce Platform"
+        />
+        <FormSelect
+          label="Category"
+          {...form.register('category')}
+          error={form.formState.errors.category}
+          required
+          options={[
+            { value: 'fullstack', label: 'Fullstack' },
+            { value: 'backend', label: 'Backend' },
+            { value: 'frontend', label: 'Frontend' },
+          ]}
+        />
       </div>
 
       {/* Tags */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-300">Project Tags</label>
+          <label className="block text-sm font-medium text-text-muted">Project Tags</label>
           <Button
             type="button"
             variant="outline"
@@ -221,51 +213,47 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         </div>
         {tags.map((_, index) => (
           <div key={index} className="flex items-center space-x-2 mb-2">
-            <input
+            <FormInput
               {...form.register(`tags.${index}`)}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              label={`Tag ${index + 1}`}
               placeholder="web application, api, dashboard, etc."
+              className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => removeTag(index)}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error mt-0.5"
             >
               <X className="w-4 h-4" />
             </Button>
           </div>
         ))}
-        <p className="text-sm text-gray-400 mt-2">
+        <p className="text-sm text-text-muted mt-2">
           Add flexible tags like "web application", "api", "dashboard", "mobile app", etc.
         </p>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Short Description *</label>
-        <input
-          type="text"
+        <FormInput
+          label="Short Description"
           {...form.register('description')}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          error={form.formState.errors.description}
+          required
           placeholder="Brief description of the project"
         />
-        {form.formState.errors.description && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.description.message}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Detailed Content *</label>
-        <textarea
+        <FormTextarea
+          label="Detailed Content"
           {...form.register('content')}
+          error={form.formState.errors.content}
+          required
           rows={6}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           placeholder="Detailed description of the project, features, and implementation details..."
         />
-        {form.formState.errors.content && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.content.message}</p>
-        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -305,7 +293,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
       {/* Technologies */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-300">Technologies Used *</label>
+          <label className="block text-sm font-medium text-text-muted">Technologies Used *</label>
           <Button
             type="button"
             variant="outline"
@@ -319,24 +307,24 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
         </div>
         {tech.map((_, index) => (
           <div key={index} className="flex items-center space-x-2 mb-2">
-            <input
+            <FormInput
               {...form.register(`tech.${index}`)}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="React, TypeScript, Node.js"
+              className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => removeTech(index)}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error mt-0.5"
             >
               <X className="w-4 h-4" />
             </Button>
           </div>
         ))}
         {form.formState.errors.tech && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.tech.message}</p>
+          <p className="text-error text-sm mt-1">{form.formState.errors.tech.message}</p>
         )}
       </div>
 
@@ -379,51 +367,37 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
       </div>
 
       {/* Analytics */}
-      <div className="bg-gray-800 p-6 rounded-lg">
-        <h3 className="text-lg font-semibold text-white mb-4">Project Analytics</h3>
+      <div className="bg-bg-light/5 border border-border/50 p-6 rounded-lg">
+        <h3 className="text-lg font-semibold text-text mb-4">Project Analytics</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Lines of Code</label>
-            <input
-              type="number"
-              {...form.register('analytics.linesOfCode', { valueAsNumber: true })}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="50000"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Uptime</label>
-            <input
-              type="text"
-              {...form.register('analytics.uptime')}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="99.9%"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Active Users</label>
-            <input
-              type="number"
-              {...form.register('analytics.users', { valueAsNumber: true })}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="1000"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Performance Score</label>
-            <input
-              type="text"
-              {...form.register('analytics.performance')}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="95/100"
-            />
-          </div>
+          <FormInput
+            label="Lines of Code"
+            type="number"
+            {...form.register('analytics.linesOfCode', { valueAsNumber: true })}
+            placeholder="50000"
+          />
+          <FormInput
+            label="Uptime"
+            {...form.register('analytics.uptime')}
+            placeholder="99.9%"
+          />
+          <FormInput
+            label="Active Users"
+            type="number"
+            {...form.register('analytics.users', { valueAsNumber: true })}
+            placeholder="1000"
+          />
+          <FormInput
+            label="Performance Score"
+            {...form.register('analytics.performance')}
+            placeholder="95/100"
+          />
         </div>
       </div>
 
       {/* Main Project Image */}
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Main Project Image</label>
+        <label className="block text-sm font-medium text-text-muted mb-2">Main Project Image</label>
         <ImageUpload
           onUpload={handleMainImageUpload}
           onRemove={handleMainImageRemove}
@@ -435,7 +409,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({
 
       {/* Project Screenshots */}
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Project Screenshots</label>
+        <label className="block text-sm font-medium text-text-muted mb-2">Project Screenshots</label>
         <ImageUpload
           onUpload={handleScreenshotUpload}
           multiple={true}

@@ -534,30 +534,44 @@ export const educationService = {
 // Projects Section CRUD
 export const projectService = {
   async getAll(): Promise<ProjectData[]> {
-    try {
-      const { data, error } = await supabase
-        .from('projects')
-        .select('*')
-        .order('created_at', { ascending: false });
+    let retries = 3;
+    let lastError;
 
-      if (error) throw error;
-      // Ensure all projects have the required arrays
-      const processedData = (data || []).map((project: any) => ({
-        ...project,
-        tags: project.tags || [],
-        tech: project.tech || [],
-        contributions: project.contributions || [],
-        screenshots: project.screenshots || [],
-        category: (project.category as 'fullstack' | 'backend' | 'frontend') || 'fullstack',
-      }));
+    while (retries > 0) {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      const result = processedData.length > 0 ? processedData : mockData.projects;
-      return result as ProjectData[];
-    } catch (error) {
-      console.warn('Using mock project data');
-      console.log('ProjectService.getAll() - Mock data:', mockData.projects);
-      return mockData.projects;
+        if (error) throw error;
+
+        // Ensure all projects have the required arrays
+        const processedData = (data || []).map((project: any) => ({
+          ...project,
+          tags: project.tags || [],
+          tech: project.tech || [],
+          contributions: project.contributions || [],
+          screenshots: project.screenshots || [],
+          category: (project.category as 'fullstack' | 'backend' | 'frontend') || 'fullstack',
+        }));
+
+        return processedData as ProjectData[];
+      } catch (error) {
+        lastError = error;
+        // checking if retries > 1 to avoid logging the last failure as a warning (it will be thrown)
+        if (retries > 1) {
+          console.warn(`Attempt ${4 - retries} failed, retrying...`, error instanceof Error ? error.message : error);
+        }
+        retries--;
+        if (retries === 0) {
+          console.error('All retry attempts failed.');
+          throw lastError;
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
     }
+    throw lastError || new Error('Failed to fetch projects');
   },
 
   async getBySlug(slug: string): Promise<ProjectData | null> {
@@ -571,9 +585,8 @@ export const projectService = {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.warn('Project not found in database, checking mock data');
-      const mockProject = mockData.projects.find(project => project.slug === slug);
-      return mockProject || null;
+      console.error('Error fetching project by slug:', error);
+      return null;
     }
   },
 
@@ -644,6 +657,38 @@ export const projectService = {
 
 // Blog Section CRUD
 export const blogService = {
+  async getBySlug(slug: string): Promise<BlogData | null> {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('slug', slug)
+        .single();
+
+      if (error) throw error;
+
+      return {
+        id: data.id,
+        title: data.title,
+        slug: data.slug,
+        summary: data.summary,
+        content: data.content,
+        tags: data.tags || [],
+        coverImage: data.cover_image,
+        featured: data.featured,
+        published: data.published,
+        readTime: data.read_time,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+      };
+    } catch (error) {
+      console.warn('Error fetching blog post by slug:', error);
+      // Fallback to mock data if needed, or return null
+      const mockPost = mockData.blogPosts.find(p => p.slug === slug);
+      return mockPost || null;
+    }
+  },
+
   async getAll(): Promise<BlogData[]> {
     try {
       // Add retry logic

@@ -62,10 +62,10 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="block">
-              <h1 className="text-xl font-bold text-text hover:text-primary transition-colors duration-200 cursor-pointer">
-                Victory Johnson
-              </h1>
+            <Link href="/" className="flex items-center gap-2">
+              <div className="relative w-10 h-10 overflow-hidden rounded-full border border-primary/20">
+                <img src="/my_logo.png" alt="Victory Johnson" className="w-full h-full object-cover" />
+              </div>
             </Link>
           </div>
 

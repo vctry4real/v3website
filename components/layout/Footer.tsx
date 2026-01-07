@@ -27,8 +27,10 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="text-2xl font-bold text-text block">
-              Victory Johnson
+            <Link href="/" className="flex items-center gap-3 text-2xl font-bold text-text mb-4">
+              <div className="relative w-10 h-10 overflow-hidden rounded-lg border border-primary/20 bg-bg-light/10">
+                <img src="/my_logo.png" alt="Victory Johnson" className="w-full h-full object-cover" />
+              </div>
             </Link>
             <p className="text-text-muted leading-relaxed max-w-sm">
               Full-stack software engineer crafting exceptional digital experiences with precision and passion.

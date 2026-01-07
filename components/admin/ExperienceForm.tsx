@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Save, Plus, X, Edit, Trash2 } from 'lucide-react';
+import { Plus, X, Edit, Trash2, Save } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { FormInput, FormTextarea } from '../ui/FormField';
 import { experienceSchema, type ExperienceFormData } from '../types/admin';
 import { experienceService, type ExperienceData } from '../lib/adminService';
 import toast from 'react-hot-toast';
@@ -109,78 +110,55 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Company *</label>
-          <input
-            type="text"
-            {...form.register('company')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Company name"
-          />
-          {form.formState.errors.company && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.company.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Position *</label>
-          <input
-            type="text"
-            {...form.register('position')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Job title"
-          />
-          {form.formState.errors.position && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.position.message}</p>
-          )}
-        </div>
+        <FormInput
+          label="Company"
+          {...form.register('company')}
+          error={form.formState.errors.company}
+          required
+          placeholder="Company name"
+        />
+        <FormInput
+          label="Position"
+          {...form.register('position')}
+          error={form.formState.errors.position}
+          required
+          placeholder="Job title"
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Duration *</label>
-          <input
-            type="text"
-            {...form.register('duration')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="2022 - Present"
-          />
-          {form.formState.errors.duration && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.duration.message}</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">Location *</label>
-          <input
-            type="text"
-            {...form.register('location')}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="San Francisco, CA"
-          />
-          {form.formState.errors.location && (
-            <p className="text-red-400 text-sm mt-1">{form.formState.errors.location.message}</p>
-          )}
-        </div>
+        <FormInput
+          label="Duration"
+          {...form.register('duration')}
+          error={form.formState.errors.duration}
+          required
+          placeholder="2022 - Present"
+        />
+        <FormInput
+          label="Location"
+          {...form.register('location')}
+          error={form.formState.errors.location}
+          required
+          placeholder="San Francisco, CA"
+        />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Description *</label>
-        <textarea
+        <FormTextarea
+          label="Description"
           {...form.register('description')}
+          error={form.formState.errors.description}
+          required
           rows={4}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           placeholder="Brief description of your role and achievements"
         />
-        {form.formState.errors.description && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.description.message}</p>
-        )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Logo URL</label>
-        <input
+        <FormInput
+          label="Logo URL"
           type="url"
           {...form.register('logo')}
-          className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="https://example.com/logo.png"
         />
       </div>
@@ -188,7 +166,7 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
       {/* Responsibilities */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-300">Key Responsibilities *</label>
+          <label className="block text-sm font-medium text-text-muted">Key Responsibilities *</label>
           <Button
             type="button"
             variant="outline"
@@ -202,31 +180,32 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
         </div>
         {responsibilities.map((_, index) => (
           <div key={index} className="flex items-center space-x-2 mb-2">
-            <input
+            <FormInput
+              label=""
               {...form.register(`responsibilities.${index}`)}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Key responsibility"
+              className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => removeResponsibility(index)}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error mt-0.5"
             >
               <X className="w-4 h-4" />
             </Button>
           </div>
         ))}
         {form.formState.errors.responsibilities && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.responsibilities.message}</p>
+          <p className="text-error text-sm mt-1">{form.formState.errors.responsibilities.message}</p>
         )}
       </div>
 
       {/* Technologies */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <label className="block text-sm font-medium text-gray-300">Technologies Used *</label>
+          <label className="block text-sm font-medium text-text-muted">Technologies Used *</label>
           <Button
             type="button"
             variant="outline"
@@ -240,24 +219,25 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({
         </div>
         {technologies.map((_, index) => (
           <div key={index} className="flex items-center space-x-2 mb-2">
-            <input
+            <FormInput
+              label=""
               {...form.register(`technologies.${index}`)}
-              className="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Technology name"
+              className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => removeTechnology(index)}
-              className="text-red-400 hover:text-red-300"
+              className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error mt-0.5"
             >
               <X className="w-4 h-4" />
             </Button>
           </div>
         ))}
         {form.formState.errors.technologies && (
-          <p className="text-red-400 text-sm mt-1">{form.formState.errors.technologies.message}</p>
+          <p className="text-error text-sm mt-1">{form.formState.errors.technologies.message}</p>
         )}
       </div>
 

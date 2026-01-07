@@ -50,6 +50,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [isDragOver, setIsDragOver] = useState(false);
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: {
@@ -163,8 +164,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       // Show loading toast
       const loadingToast = toast.loading('Uploading image...');
 
-      // Upload image using the service (use base64 for now since no server endpoint)
-      const result = await ImageUploadService.uploadImage(file, false);
+      // Upload image using the service (use server upload)
+      const result = await ImageUploadService.uploadImage(file, true);
 
       // Dismiss loading toast
       toast.dismiss(loadingToast);

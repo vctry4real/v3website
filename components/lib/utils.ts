@@ -52,14 +52,14 @@ export const preloadImage = (src: string): Promise<void> => {
 };
 
 export const preloadImages = async (srcs: string[]): Promise<void> => {
-  const promises = srcs.map(src => preloadImage(src).catch(() => {}));
+  const promises = srcs.map(src => preloadImage(src).catch(() => { }));
   await Promise.all(promises);
 };
 
 // Scroll optimization
 export const smoothScrollTo = (element: HTMLElement | null, offset: number = 0): void => {
   if (!element) return;
-  
+
   const elementPosition = element.getBoundingClientRect().top;
   const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -75,13 +75,21 @@ export const cleanupEventListeners = (element: HTMLElement, eventType: string, h
 };
 
 // Performance monitoring
-export const measurePerformance = (name: string, fn: () => void): void => {
+// Performance monitoring
+export const measurePerformance = async <T>(name: string, fn: () => Promise<T> | T): Promise<T> => {
   if (process.env.NODE_ENV === 'development') {
     const start = performance.now();
-    fn();
-    const end = performance.now();
-    console.log(`${name} took ${end - start} milliseconds`);
+    try {
+      const result = await fn();
+      const end = performance.now();
+      console.log(`${name} took ${end - start} milliseconds`);
+      return result;
+    } catch (error) {
+      const end = performance.now();
+      console.log(`${name} failed after ${end - start} milliseconds`);
+      throw error;
+    }
   } else {
-    fn();
+    return await fn();
   }
 };

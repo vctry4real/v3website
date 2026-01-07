@@ -104,7 +104,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         {isFilterOpen && (
           <div className="absolute top-full left-0 right-0 mt-2 bg-bg-light border border-border/30 rounded-lg shadow-xl shadow-black/50 z-20 backdrop-blur-xl">
             <div className="p-4 space-y-3">
-              <h4 className="text-sm font-medium text-text-muted mb-3 uppercase tracking-wider text-xs">Filter by Category</h4>
+              <h4 className="text-sm font-medium text-text-muted mb-3 uppercase tracking-wider">Filter by Category</h4>
               {filters.map((filter) => (
                 <label key={filter.value} className="flex items-center space-x-3 cursor-pointer group">
                   <input

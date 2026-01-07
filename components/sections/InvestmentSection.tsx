@@ -147,7 +147,7 @@ export default function InvestmentSection() {
                       style={{ animationDelay: `${i * 100}ms` }}
                     >
 
-                      <FaCheckDouble className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                      <FaCheckDouble className="w-5 h-5 text-success shrink-0 mt-0.5" />
                       <span className="text-text-muted">{item}</span>
                     </div>
                   ))}

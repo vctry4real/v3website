@@ -95,8 +95,8 @@ export const ProjectList: React.FC<ProjectListProps> = ({ onSave }) => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">Projects</h3>
-          <p className="text-gray-400">Manage your portfolio projects and showcase your work</p>
+          <h3 className="text-xl sm:text-2xl font-bold text-text mb-2">Projects</h3>
+          <p className="text-text-muted">Manage your portfolio projects and showcase your work</p>
         </div>
         <Button onClick={() => setShowForm(true)} className="flex items-center w-full sm:w-auto">
           <Plus className="w-4 h-4 mr-2" />
@@ -116,7 +116,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({ onSave }) => {
 
       {/* Results Summary */}
       {projects.length > 0 && (
-        <div className="flex items-center justify-between text-sm text-gray-400">
+        <div className="flex items-center justify-between text-sm text-text-muted">
           <span>
             Showing {filteredProjects.length} of {projects.length} projects
             {(searchValue || activeFilters.length > 0) && ' (filtered)'}
@@ -127,7 +127,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({ onSave }) => {
                 setSearchValue('');
                 setActiveFilters([]);
               }}
-              className="text-blue-400 hover:text-blue-300"
+              className="text-primary hover:text-primary/80"
             >
               Clear all filters
             </button>
@@ -138,106 +138,107 @@ export const ProjectList: React.FC<ProjectListProps> = ({ onSave }) => {
       {/* Projects List */}
       {projects.length === 0 ? (
         <div className="text-center py-12">
-          <Eye className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-white mb-2">No projects yet</h3>
-          <p className="text-gray-400 mb-6">Add your first project to showcase your work</p>
+          <Eye className="w-16 h-16 text-text-muted mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-text mb-2">No projects yet</h3>
+          <p className="text-text-muted mb-6">Add your first project to showcase your work</p>
           <Button onClick={() => setShowForm(true)}>
             Add Your First Project
           </Button>
         </div>
       ) : (
-                 <div className="space-y-4">
-           {filteredProjects.map((project) => (
-             <div
-               key={project.id}
-               className="bg-gray-800 rounded-lg p-4 sm:p-6 hover:bg-gray-750 transition-colors duration-200"
-             >
-               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-                 <div className="flex-1 min-w-0">
-                   <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-3">
-                     {project.image && (
-                       <img
-                         src={project.image}
-                         alt={project.title}
-                         className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
-                       />
-                     )}
-                     <div className="flex-1 min-w-0">
-                       <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                         <h4 className="text-lg font-semibold text-white truncate">{project.title}</h4>
-                         {project.featured && (
-                           <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs flex-shrink-0">
-                             Featured
-                           </span>
-                         )}
-                       </div>
-                       <p className="text-gray-400 text-sm mb-2">{project.category}</p>
-                       <p className="text-gray-300 text-sm">{project.description}</p>
-                     </div>
-                   </div>
-                   
-                   {/* Tech Stack */}
-                   {project.tech && project.tech.length > 0 && (
-                     <div className="flex flex-wrap gap-2 mb-3">
-                       {project.tech.map((tech, index) => (
-                         <span
-                           key={index}
-                           className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs"
-                         >
-                           {tech}
-                         </span>
-                       ))}
-                     </div>
-                   )}
-                   
-                   {/* Links */}
-                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
-                     {project.github && (
-                       <a
-                         href={project.github}
-                         target="_blank"
-                         rel="noopener noreferrer"
-                         className="flex items-center text-gray-400 hover:text-white transition-colors"
-                       >
-                         <Github className="w-4 h-4 mr-1" />
-                         GitHub
-                       </a>
-                     )}
-                     {project.live && (
-                       <a
-                         href={project.live}
-                         target="_blank"
-                         rel="noopener noreferrer"
-                         className="flex items-center text-gray-400 hover:text-white transition-colors"
-                       >
-                         <ExternalLink className="w-4 h-4 mr-1" />
-                         Live Demo
-                       </a>
-                     )}
-                   </div>
-                 </div>
-                 
-                 <div className="flex items-center space-x-2 lg:ml-4">
-                   <Button
-                     variant="outline"
-                     size="sm"
-                     onClick={() => handleEdit(project)}
-                   >
-                     <Edit className="w-4 h-4" />
-                   </Button>
-                   <Button
-                     variant="outline"
-                     size="sm"
-                     onClick={() => handleDelete(project.id!)}
-                     className="text-red-400 hover:text-red-300"
-                   >
-                     <Trash2 className="w-4 h-4" />
-                   </Button>
-                 </div>
-               </div>
-             </div>
-           ))}
-         </div>
+        <div className="space-y-4">
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-bg-light/5 border border-border/50 rounded-xl p-4 sm:p-6 hover:bg-bg-light/10 transition-all duration-200 backdrop-blur-sm"
+            >
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-3">
+                    {project.image && (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-16 h-16 rounded-lg object-cover shrink-0"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                        <h4 className="text-lg font-semibold text-text truncate">{project.title}</h4>
+                        {project.featured && (
+                          <span className="bg-primary/20 text-primary px-2 py-1 rounded-full text-xs shrink-0 border border-primary/30">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-text-muted text-sm mb-2">{project.category}</p>
+                      <p className="text-text-secondary text-sm">{project.description}</p>
+                    </div>
+                  </div>
+
+                  {/* Tech Stack */}
+                  {project.tech && project.tech.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {project.tech.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-surface-muted text-text-muted rounded text-xs border border-border-muted"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Links */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-text-muted hover:text-text transition-colors"
+                      >
+                        <Github className="w-4 h-4 mr-1" />
+                        GitHub
+                      </a>
+                    )}
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-text-muted hover:text-text transition-colors"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-1" />
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 lg:ml-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleEdit(project)}
+                    className="border-border hover:bg-surface-muted text-text-muted hover:text-text"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDelete(project.id!)}
+                    className="text-error hover:text-error/80 border-error/30 hover:bg-error/10 hover:border-error"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
