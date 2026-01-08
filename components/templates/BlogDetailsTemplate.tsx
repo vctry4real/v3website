@@ -67,6 +67,30 @@ export const BlogDetailsTemplate: React.FC<BlogDetailsTemplateProps> = ({ post, 
         );
     }
 
+
+    const handleShare = async () => {
+        const shareData = {
+            title: post?.title || 'Blog Post',
+            text: post?.description || 'Check out this article!',
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(window.location.href);
+                toast.success('Link copied to clipboard!');
+            }
+        } catch (err) {
+            console.error('Error sharing:', err);
+            // Ignore abort errors (user cancelled share)
+            if (err instanceof Error && err.name !== 'AbortError') {
+                toast.error('Failed to share article');
+            }
+        }
+    };
+
     return (
         <div className="min-h-screen bg-bg-dark relative overflow-hidden">
             {/* Background Pattern */}
@@ -158,7 +182,10 @@ export const BlogDetailsTemplate: React.FC<BlogDetailsTemplateProps> = ({ post, 
                         </div>
                     )}
 
-                    <button className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-widest hover:text-white transition-colors">
+                    <button
+                        onClick={handleShare}
+                        className="inline-flex items-center text-primary font-bold text-sm uppercase tracking-widest hover:text-white transition-colors"
+                    >
                         <Share2 className="w-4 h-4 mr-2" />
                         Share Article
                     </button>

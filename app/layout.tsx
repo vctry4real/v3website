@@ -24,12 +24,21 @@ export const metadata: Metadata = {
     title: "Victory Johnson | Full-Stack Software Engineer",
     description: "Building scalable web applications and innovative digital solutions.",
     siteName: "Victory Johnson Portfolio",
+    images: [
+      {
+        url: '/assets/Portfolio_image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Victory Johnson Portfolio',
+      }
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Victory Johnson | Full-Stack Software Engineer",
     description: "Building scalable web applications and innovative digital solutions.",
     creator: "@vctry4real", // Update if different
+    images: ['/assets/Portfolio_image.png'],
   },
   icons: {
     icon: '/my_logo.png',

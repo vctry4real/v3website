@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
     { label: 'Services', href: '/services' },
     { label: 'Portfolio', href: '/portfolio' }, // Renamed from Works/Work
     { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' }, // Replaces Appointments in generic footer, but can keep Appointments if preferred. I'll stick to standard "Links"
+    { label: 'Appointments', href: '/appointments' }, // Replaces Appointments in generic footer, but can keep Appointments if preferred. I'll stick to standard "Links"
   ];
 
   return (
