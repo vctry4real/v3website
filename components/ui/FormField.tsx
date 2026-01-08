@@ -3,7 +3,7 @@ import { FieldError } from 'react-hook-form';
 import { AlertCircle, Info } from 'lucide-react';
 
 interface FormFieldProps {
-  label: string;
+  label?: string;
   name: string;
   error?: FieldError;
   required?: boolean;
@@ -25,10 +25,12 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <label htmlFor={name} className="block text-sm font-medium text-text-secondary">
-        {label}
-        {required && <span className="text-error ml-1">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-sm font-medium text-text-secondary">
+          {label}
+          {required && <span className="text-error ml-1">*</span>}
+        </label>
+      )}
 
       <div className="relative">
         {children}
@@ -62,7 +64,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError;
-  label: string;
+  label?: string;
   description?: string;
   required?: boolean;
 }

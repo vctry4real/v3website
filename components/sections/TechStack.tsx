@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useGSAP } from '../hooks/useGSAP';
+
 import {
     SiReact,
     SiNextdotjs,
@@ -33,7 +33,7 @@ const techs = [
 ];
 
 export default function TechStack() {
-    const { fadeIn } = useGSAP();
+
 
     // Duplicate list for seamless marquee
     const marqueeTechs = [...techs, ...techs];
