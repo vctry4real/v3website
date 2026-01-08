@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw';
 import { type BlogData, type ProfileImageData } from '@/components/lib/adminService';
 import { LikeButton } from '@/components/blog/LikeButton';
 import { CommentSection } from '@/components/blog/CommentSection';
+import toast from 'react-hot-toast';
 
 interface BlogDetailsTemplateProps {
     post: BlogData | null;
@@ -71,7 +72,7 @@ export const BlogDetailsTemplate: React.FC<BlogDetailsTemplateProps> = ({ post, 
     const handleShare = async () => {
         const shareData = {
             title: post?.title || 'Blog Post',
-            text: post?.description || 'Check out this article!',
+            text: post?.summary || 'Check out this article!',
             url: window.location.href,
         };
 
