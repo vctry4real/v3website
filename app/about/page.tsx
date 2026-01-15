@@ -14,6 +14,7 @@ import { Button } from "../../components/ui/Button";
 
 export default function AboutPage() {
     const { scrollReveal, scrollRevealMobile, fadeInUp, staggerFadeIn } = useGSAP();
+    console.log("About page rendering"); // Trigger HMR
     const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [loading, setLoading] = useState(true);
 
